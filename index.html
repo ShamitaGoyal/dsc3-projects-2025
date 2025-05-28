@@ -127,11 +127,25 @@
         </p>
         <h3>Data Preprocessing and Transformations</h3>
         <p>
-
+            We started by parsing the CSV file and generating image-label pairs that were then loaded into eight separate classes based on different factors. Each of the tumor 
+            subtypes were assigned an integer class value 0 through 7. The eight different classes were then split into two general categories: 
+            benign and malignant cells. Binary labels were created for the categorical benign and malignant cells. 
+        </p>
+        <p>
+            During preprocessing and transformation, we resized the images to be a standard amount of pixels. We then applied PyTorch transformations in order to convert each 
+            image to a tensor and then normalized them using ImageNet statistics in order to ensure compatibility with our PyTorch models. 
         </p>
         <h3>Training, Optimization, and Testing</h3>
         <p>
-
+            All the models were trained, optimized 
+            The models were then moved to the GPU in order to speed up the training process when available. 
+            
+            The model was trained over 30 epochs total, using the Adam optimizer (learning rate 1e-4) and cross-entropy loss for multi-class classification. While training each epoch, we ensured 
+            to track both loss and accuracy on the training and validation dataset. To prevent overfitting, we included a learning rate scheduler 
+            that reduced the learning rate whenever the validation loss was barely changing. We also incorporated early stopping in order to stop 
+            the model from training when there was no improvement happening. After training, the model was evaluated using two different confusion 
+            matrices: the 8 class matrix and the binary matrix.
+        </p>
         </p>
     </div>
 
@@ -148,7 +162,21 @@
         </p>
         <h3>ResNet</h3>
         <p>
-
+            The first model we built is a computer vision model pipeline using PyTorch and the dataset. We started by parsing the CSV file and 
+            generating image-label pairs that were then loaded into eight separate classes based on different factors. Each of the tumor 
+            subtypes were assigned an integer class value 0 through 7. The eight different classes were then split into two general categories: 
+            benign and malignant cells. Binary labels were created for the categorical benign and malignant cells. 
+        </p>
+        <p>
+            During preprocessing and transformation, we resized the images to all be 260x260 pixels. We then applied PyTorch transformations in order to convert each 
+            image to a tensor and then normalized them using ImageNet statistics in order to ensure compatibility with the ResNet-18 pretrained model. 
+            We used the convolution layers in the ResNet-18 model to automatically take out and learn important patterns from the images. The model 
+            was then moved to the GPU in order to speed up the training process when available. The model was trained over 30 epochs total, using 
+            the Adam optimizer (learning rate 1e-4) and cross-entropy loss for multi-class classification. While training each epoch, we ensured 
+            to track both loss and accuracy on the training and validation dataset. To prevent overfitting, we included a learning rate scheduler 
+            that reduced the learning rate whenever the validation loss was barely changing. We also incorporated early stopping in order to stop 
+            the model from training when there was no improvement happening. After training, the model was evaluated using a precision, recall, 
+            an F1-score, and 2 different confusion matrices: the 8 class matrix and the binary matrix.
         </p>
         <h3>U-Net</h3>
         <p>
