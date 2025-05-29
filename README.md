@@ -6,7 +6,7 @@ Conducted by `Shamita Goyal`, `Hannah Huang`, `Ryan Estanislao`, and `Nicolas To
 
 
 <p align="center">
-  <img src="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/FinalPoster.png" width="415" height="350"/>
+  <img src="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/FinalPoster.png" width="415" height="330"/>
 </p>
 
 
