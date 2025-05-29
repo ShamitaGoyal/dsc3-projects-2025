@@ -1,6 +1,8 @@
-# [Utilizing Machines to Identify Benign and Malignant Cells in Microscopic Images](https://shamitagoyal.github.io/dsc3-projects-2025/)
+# Utilizing Machines to Identify Benign and Malignant Cells in Microscopic Images
 ## DS3-Projects-2025 Winter - Spring Quarter
 Conducted by `Shamita Goyal`, `Hannah Huang`, `Ryan Estanislao`, and `Nicolas Toon`
+
+[Link to the project ↗](https://shamitagoyal.github.io/dsc3-projects-2025/)
 
 ---
 ## Abstract
@@ -27,11 +29,11 @@ We focused on testing differently structured models to identify certain types of
 ---
 ## About the Models
 
-Computer vision is a broad, umbrella term that many models fall under. However, in this project, we used ResNet, a pretrained convolutional neural network, provided by `Torchvision`. `ResNet` was built in 2015 for the purposes of image recognition, and will essentially serve as our goal for this project. Read the Jupyter Notebook to learn more!
+Computer vision is a broad, umbrella term that many models fall under. However, in this project, we used ResNet, a pretrained convolutional neural network, provided by `Torchvision`. `ResNet` was built in 2015 for the purposes of image recognition, and will essentially serve as our goal for this project. Read the [Jupyter Notebook](https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/notebooks/CV_model.ipynb) to learn more! 
 
-`U-Nets` is another form of convolutional neural network, but employs a specific structure to improve performance. As in the name, U-Nets are structured in a u-shape, due to the connections linking convolutional layers opposite of each other, while still being connected with adjacent layers. U-Nets are very widely used in image generation models, such as DALL-E, Stable Diffusion, and Midjourney, although it was originally created for biomedical image segmentation tasks similar to this project. Read the Jupyter Notebook to learn more!
+`U-Nets` is another form of convolutional neural network, but employs a specific structure to improve performance. As in the name, U-Nets are structured in a u-shape, due to the connections linking convolutional layers opposite of each other, while still being connected with adjacent layers. U-Nets are very widely used in image generation models, such as DALL-E, Stable Diffusion, and Midjourney, although it was originally created for biomedical image segmentation tasks similar to this project. Read the [Jupyter Notebook](https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/notebooks/vit_nonbinary.ipynb) to learn more!
 
-`Vision transformers` use a tokenization pipeline to process images. Similar to how large language models like ChatGPT use tokens to parse through words, vision transformers tokenize patches of the image and treat them like tokens, decipher patterns and relationships between varying patches. Originally, they were designed as alternatives to convolutional neural networks, and are now seen to have higher ceilings than convolutional neural networks, with the drawback of data inefficiency. Vision transformers require large amounts of data to be accurate and are computationally expensive. Read the Jupyter Notebook to learn more!
+`Vision transformers` use a tokenization pipeline to process images. Similar to how large language models like ChatGPT use tokens to parse through words, vision transformers tokenize patches of the image and treat them like tokens, decipher patterns and relationships between varying patches. Originally, they were designed as alternatives to convolutional neural networks, and are now seen to have higher ceilings than convolutional neural networks, with the drawback of data inefficiency. Vision transformers require large amounts of data to be accurate and are computationally expensive. Read the [Jupyter Notebook](https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/notebooks/UNET-implementation.ipynb) to learn more!
 
 ## Methodologies
 
@@ -41,7 +43,15 @@ Computer vision is a broad, umbrella term that many models fall under. However, 
 
 ## Data Preprocessing and Transformations
 
+We started by parsing the CSV file and generating image-label pairs that were then loaded into eight separate classes based on different factors. Each of the tumor subtypes were assigned an integer class value 0 through 7. The eight different classes were then split into two general categories: benign and malignant cells. Binary labels were created for the categorical benign and malignant cells.
+
+During preprocessing and transformation, we resized the images to be a standard amount of pixels. We then applied `PyTorch transformations` in order to convert each image to a `tensor` and then normalized them using `ImageNet statistics` in order to ensure compatibility with our `PyTorch models`.
+
 ## Training, Optimization, and Testing
+
+All the models were trained, optimized, and tested in similar fashions. The models were then moved to the GPU in order to speed up the training process when available. The `ResNet` and `U-Net models` were trained over `30 epochs total`, while the `Vision Transformer` was trained using `200 epochs`. All the models used the `Adam optimizer` (with learning rate 0.0001) and `cross-entropy loss` for `multi-class classification`. While training each epoch, we ensured to track both loss and accuracy on the training and validation dataset. To prevent overfitting, we included a `learning rate scheduler` that reduced the learning rate whenever the validation loss was barely changing. We also incorporated `early stopping` in order to stop the model from training when there was no improvement happening. After training, the model was evaluated using two different confusion matrices: `the 8 class matrix` and the `binary matrix`.
+
+
 
 ---
 
@@ -52,13 +62,49 @@ Mathematically, `recall` is the number of `true positive predictions` that your 
 
 ## ResNet
 
+The ResNet model outperformed all of the other models, with near-perfect accuracy for classification and 100% recall and precision. Its confusion matrices for the testing set can be seen below:
+
+<p align="center">
+  <img src="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/images/resnet-multiclass-cm.png" width="315" height="250"/>
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/images/resnet-binary-cm.png" width="315" height="250"/>
+</p>
+
 ## U-Net
 
+The vision transformer also did pretty well, with near-perfect accuracy as well, with ~99.1% for both recall and precision. Its confusion matrices can be found below:
+
+<p align="center">
+  <img src="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/images/vit-multiclass-cm.png" width="315" height="250"/>
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/images/vit-binary-cm.png" width="315" height="250"/>
+</p>
+
 ## Vision Transformer
+
+On the other hand, the U-Net model performed significantly worse compared to the ResNet model and vision transformer, with only ~41.8% multiclass accuracy (~81.4% binary accuracy). However, its recall and precision were fairly good, with ~82.7% precision and ~90.2% recall. Its confusion matrices can be found below:
+
+<p align="center">
+  <img src="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/images/unet-multiclass-cm.png" width="315" height="250"/>
+&nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/images/unet-binary-cm.png" width="315" height="250"/>
+</p>
+
 
 ---
 
 ## Conclusion
+
+After analysis, the ResNet model did the best, followed by the vision transformer, and then the U-Net model. We believe that the `ResNet model` is the best overall model to use for such tumor classification, as it does not consume much time or resources to achieve great results.
+
+The vision transformer also did well in our research, but ultimately ended up taking far too long to train compared to the ResNet model, with no visible improvement in classification testing results.
+
+The U-Net also fell very short to our expectations. Going into this project, we believed that because a U-Net model is good at image segmentation, it would have the abilities to classify the segments that it found in images. However, this was not the case. The typical U-Net structure strengths lie in the image segmentation, and in our project, we had to modify the model to produce classification outputs. However, our implementation fell short of expectations.
+
+In the future, we would like to experiment further with `modified U-Net models` that are able to accurately segment and classify microscopic tumors. It would be super beneficial to create a singular model that has the ability to segment out tumors and classify it at the same time.
+
+Overall, this project demonstrates research comparing the performance of different types of machine learning models to achieve the same task. The results highlight that the ResNet-18 model is a great option for such image classification tasks, while other machine learning models may have the same aspects, but fall short in other areas.
+
 
 ---
 
