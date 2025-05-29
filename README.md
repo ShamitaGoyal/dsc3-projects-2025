@@ -1,4 +1,4 @@
-# Utilizing Machines to Identify Benign and Malignant Cells in Microscopic Images
+# [Utilizing Machines to Identify Benign and Malignant Cells in Microscopic Images](https://shamitagoyal.github.io/dsc3-projects-2025/)
 ## DS3-Projects-2025 Winter - Spring Quarter
 Conducted by `Shamita Goyal`, `Hannah Huang`, `Ryan Estanislao`, and `Nicolas Toon`
 
