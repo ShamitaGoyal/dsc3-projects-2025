@@ -4,6 +4,12 @@ Conducted by `Shamita Goyal`, `Hannah Huang`, `Ryan Estanislao`, and `Nicolas To
 
 [Link to the project ↗](https://shamitagoyal.github.io/dsc3-projects-2025/)
 
+
+<p align="center">
+  <img src="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/FinalPoster.png" width="415" height="350"/>
+</p>
+
+
 ---
 ## Abstract
 With the rise of new technology in today's world, one of the goals of developing artificial intelligence is to aide medical professionals in making diagnosis. One of the biggest areas where artificial intelligence is being utilized is identifying cancerous cells.
