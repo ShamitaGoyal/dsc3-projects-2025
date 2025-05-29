@@ -88,17 +88,6 @@
             by Torchvision. ResNet was built in 2015 for the purposes of image recognition, and will essentially serve as our goal for this project. 
             Read the <a href="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/CV_model.ipynb">Jupyter Notebook</a> to learn more!
         </p>
-        <h3 class="model-type">U-Net</h3>
-        <div class="image">
-            <img id="model" src="images/unet.png">
-            <i class="caption">A visual representation of the U-Net's u-shape structure [<a href="https://rpubs.com/eR_ic/unet">image credit</a>]</i>
-        </div>
-        <p>
-            U-Nets is another form of convolutional neural network, but employs a specific structure to improve performance. As in the name, U-Nets are structured in a u-shape, 
-            due to the connections linking convolutional layers opposite of each other, while still being connected with adjacent layers. U-Nets are very widely used in 
-            image generation models, such as DALL-E, Stable Diffusion, and Midjourney, although it was originally created for biomedical image segmentation tasks similar to this project.
-            Read the <a href="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/unet_model_implementation.ipynb">Jupyter Notebook</a> to learn more!
-        </p>
         <h3 class="model-type">Vision Transformer</h3>
         <div class="image">
             <img id="model" src="images/vision-transformer.png">
@@ -110,6 +99,17 @@
             as alternatives to convolutional neural networks, and are now seen to have higher ceilings than convolutional neural networks, with the drawback of data inefficiency.
             Vision transformers require large amounts of data to be accurate and are computationally expensive. 
             Read the <a href="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/notebooks/vit_nonbinary.ipynb">Jupyter Notebook</a> to learn more!
+        </p>
+        <h3 class="model-type">U-Net</h3>
+        <div class="image">
+            <img id="model" src="images/unet.png">
+            <i class="caption">A visual representation of the U-Net's u-shape structure [<a href="https://rpubs.com/eR_ic/unet">image credit</a>]</i>
+        </div>
+        <p>
+            U-Nets is another form of convolutional neural network, but employs a specific structure to improve performance. As in the name, U-Nets are structured in a u-shape, 
+            due to the connections linking convolutional layers opposite of each other, while still being connected with adjacent layers. U-Nets are very widely used in 
+            image generation models, such as DALL-E, Stable Diffusion, and Midjourney, although it was originally created for biomedical image segmentation tasks similar to this project.
+            Read the <a href="https://github.com/ShamitaGoyal/dsc3-projects-2025/blob/main/unet_model_implementation.ipynb">Jupyter Notebook</a> to learn more!
         </p>
     </div>
 
@@ -137,10 +137,10 @@
         </p>
         <h3>Training, Optimization, and Testing</h3>
         <p>
-            All the models were trained, optimized 
-            The models were then moved to the GPU in order to speed up the training process when available. 
+            All the models were trained, optimized, and tested in similar fashions. The models were then moved to the GPU in order to speed up the training process when available. 
             
-            The model was trained over 30 epochs total, using the Adam optimizer (learning rate 1e-4) and cross-entropy loss for multi-class classification. While training each epoch, we ensured 
+            The ResNet and U-Net models were trained over 30 epochs total, while the Vision Transformer was trained using 200 epochs. All the models used the Adam optimizer 
+            (with learning rate 0.0001) and cross-entropy loss for multi-class classification. While training each epoch, we ensured 
             to track both loss and accuracy on the training and validation dataset. To prevent overfitting, we included a learning rate scheduler 
             that reduced the learning rate whenever the validation loss was barely changing. We also incorporated early stopping in order to stop 
             the model from training when there was no improvement happening. After training, the model was evaluated using two different confusion 
@@ -162,34 +162,54 @@
         </p>
         <h3>ResNet</h3>
         <p>
-            The first model we built is a computer vision model pipeline using PyTorch and the dataset. We started by parsing the CSV file and 
-            generating image-label pairs that were then loaded into eight separate classes based on different factors. Each of the tumor 
-            subtypes were assigned an integer class value 0 through 7. The eight different classes were then split into two general categories: 
-            benign and malignant cells. Binary labels were created for the categorical benign and malignant cells. 
+            The ResNet model outperformed all of the other models, with near-perfect accuracy for classification and 100% recall and precision. Its confusion matrices for the testing set can be seen below:
+
+            <div id="confusion-matrices">
+                <img src="images/resnet-multiclass-cm.png">
+                <img src="images/resnet-binary-cm.png">
+            </div>
         </p>
+        <h3>Vision Transformer</h3>
         <p>
-            During preprocessing and transformation, we resized the images to all be 260x260 pixels. We then applied PyTorch transformations in order to convert each 
-            image to a tensor and then normalized them using ImageNet statistics in order to ensure compatibility with the ResNet-18 pretrained model. 
-            We used the convolution layers in the ResNet-18 model to automatically take out and learn important patterns from the images. The model 
-            was then moved to the GPU in order to speed up the training process when available. The model was trained over 30 epochs total, using 
-            the Adam optimizer (learning rate 1e-4) and cross-entropy loss for multi-class classification. While training each epoch, we ensured 
-            to track both loss and accuracy on the training and validation dataset. To prevent overfitting, we included a learning rate scheduler 
-            that reduced the learning rate whenever the validation loss was barely changing. We also incorporated early stopping in order to stop 
-            the model from training when there was no improvement happening. After training, the model was evaluated using a precision, recall, 
-            an F1-score, and 2 different confusion matrices: the 8 class matrix and the binary matrix.
+            The vision transformer also did pretty well, with near-perfect accuracy as well, with ~99.1% for both recall and precision. Its confusion matrices can be found below:
+            
+            <div id="confusion-matrices">
+                <img src="images/vit-multiclass-cm.png">
+                <img src="images/vit-binary-cm.png">
+            </div>
         </p>
         <h3>U-Net</h3>
         <p>
+            On the other hand, the U-Net model performed significantly worse compared to the ResNet model and vision transformer, with only ~41.8% multiclass accuracy (~81.4% binary accuracy). However, its recall and precision were fairly good, with ~82.7% precision and ~90.2% recall. Its confusion matrices can be found below:
 
+            <div id="confusion-matrices">
+                <img src="images/unet-multiclass-cm.png">
+                <img src="images/unet-binary-cm.png">
+            </div>
         </p>
-        <h3>Vision Transformer</h3>
-        <p></p>
     </div>
 
     <div class="conclusion">
         <h2>Conclusion</h2>
         <p>
-
+            After analysis, the ResNet model did the best, followed by the vision transformer, and then the U-Net model. We believe that the ResNet model is the best overall model 
+            to use for such tumor classification, as it does not consume much time or resources to achieve great results.
+        </p>
+        <p>
+            The vision transformer also did well in our research, but ultimately ended up taking far too long to train compared to the ResNet model, with no visible improvement in classification testing results.
+        </p>
+        <p>
+            The U-Net also fell very short to our expectations. Going into this project, we believed that because a U-Net model is good at image segmentation, it would
+            have the abilities to classify the segments that it found in images. However, this was not the case. The typical U-Net structure strengths lie in the image segmentation,
+            and in our project, we had to modify the model to produce classification outputs. However, our implementation fell short of expectations.
+        </p>
+        <p>
+            In the future, we would like to experiment further with modified U-Net models that are able to accurately segment and classify microscopic tumors. It would
+            be super beneficial to create a singular model that has the ability to segment out tumors and classify it at the same time.
+        </p>
+        <p>
+            Overall, this project demonstrates research comparing the performance of different types of machine learning models to achieve the same task. The results highlight that 
+            the ResNet-18 model is a great option for such image classification tasks, while other machine learning models may have the same aspects, but fall short in other areas.
         </p>
     </div>
 
