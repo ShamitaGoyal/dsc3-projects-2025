@@ -43,3 +43,15 @@ img#model {
     margin-right: auto;
     border: 2px solid black;
 }
+
+#confusion-matrices {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+#confusion-matrices img {
+    width: 400px
+}
